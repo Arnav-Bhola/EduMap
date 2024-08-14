@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+nodemon.json
+test.json
+
 # Expo
 .expo/
 dist/

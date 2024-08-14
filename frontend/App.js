@@ -8,6 +8,7 @@ import CustomStatusBar from "./components/UI/StatusBar";
 import AllCourses from "./screens/AllCourses";
 import FavoriteCourses from "./screens/FavoriteCourses";
 import Settings from "./screens/Settings";
+import CoursesContextProvider from "./store/courses";
 import DarkModeContextProvider, { DarkModeContext } from "./store/dark-mode";
 import { Colors } from "./utils/constants/colors";
 
@@ -89,10 +90,12 @@ const Navigator = () => {
 
 export default function App() {
   return (
-    <DarkModeContextProvider>
-      <CustomStatusBar />
-      <Navigator />
-    </DarkModeContextProvider>
+    <CoursesContextProvider>
+      <DarkModeContextProvider>
+        <CustomStatusBar />
+        <Navigator />
+      </DarkModeContextProvider>
+    </CoursesContextProvider>
   );
 }
 
