@@ -1,25 +1,31 @@
-import { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useContext } from "react";
+import { FlatList, StyleSheet } from "react-native";
+import Course from "../components/Courses/Course";
 import { CoursesContext } from "../store/courses";
 import { DarkModeContext } from "../store/dark-mode";
 import { Colors } from "../utils/constants/colors";
 
-const AllCourses = () => {
+const CoursesList = () => {
   const { courses } = useContext(CoursesContext);
   const { theme } = useContext(DarkModeContext);
+
+  const renderItem = ({ item }) => <Course course={item} />;
 
   const styles = StyleSheet.create({
     container: {
       backgroundColor: theme === "light" ? Colors.blue500 : Colors.blue800,
-      flex: 1,
+      padding: 16,
     },
   });
 
   return (
-    <View style={styles.container}>
-      <Text>{courses}</Text>
-    </View>
+    <FlatList
+      data={courses}
+      renderItem={renderItem}
+      keyExtractor={(item) => item._id}
+      contentContainerStyle={styles.container}
+    />
   );
 };
 
-export default AllCourses;
+export default CoursesList;
