@@ -17,7 +17,7 @@ export const getCourse = async (req, res, next) => {
 
   let course;
   try {
-    course = await Course.findById({ id });
+    course = await Course.findById(id);
   } catch (err) {
     const error = new HttpError("Fetching courses failed, please try again later.", 500);
     return next(error);
