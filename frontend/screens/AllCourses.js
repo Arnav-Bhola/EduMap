@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import Course from "../components/Courses/Course";
 import { CoursesContext } from "../store/courses";
 import { DarkModeContext } from "../store/dark-mode";
@@ -16,15 +16,20 @@ const CoursesList = () => {
       backgroundColor: theme === "light" ? Colors.blue500 : Colors.blue800,
       padding: 16,
     },
+    background: {
+      backgroundColor: theme === "light" ? Colors.blue500 : Colors.blue800,
+    },
   });
 
   return (
-    <FlatList
-      data={courses}
-      renderItem={renderItem}
-      keyExtractor={(item) => item._id}
-      contentContainerStyle={styles.container}
-    />
+    <View style={styles.background}>
+      <FlatList
+        data={courses}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
+        contentContainerStyle={styles.container}
+      />
+    </View>
   );
 };
 

@@ -1,11 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
 import CustomHeader from "./components/Header/CustomHeader";
 import CustomStatusBar from "./components/UI/StatusBar";
 import AllCourses from "./screens/AllCourses";
+import CourseDetails from "./screens/CourseDetails";
 import FavoriteCourses from "./screens/FavoriteCourses";
 import Settings from "./screens/Settings";
 import CoursesContextProvider from "./store/courses";
@@ -13,6 +15,41 @@ import DarkModeContextProvider, { DarkModeContext } from "./store/dark-mode";
 import { Colors } from "./utils/constants/colors";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const AllCoursesStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      header: () => {},
+    }}
+  >
+    <Stack.Screen
+      name='AllCourses'
+      component={AllCourses}
+    />
+    <Stack.Screen
+      name='CourseDetail'
+      component={CourseDetails}
+    />
+  </Stack.Navigator>
+);
+
+const FavoriteCoursesStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      header: () => {},
+    }}
+  >
+    <Stack.Screen
+      name='FavoriteCourses'
+      component={FavoriteCourses}
+    />
+    <Stack.Screen
+      name='CourseDetail'
+      component={CourseDetails}
+    />
+  </Stack.Navigator>
+);
 
 const Navigator = () => {
   const darkModeCtx = useContext(DarkModeContext);
@@ -54,14 +91,14 @@ const Navigator = () => {
       >
         <Tab.Screen
           name='AllCourses'
-          component={AllCourses}
+          component={AllCoursesStack}
           options={{
             header: () => <CustomHeader />,
           }}
         />
         <Tab.Screen
           name='FavoriteCourses'
-          component={FavoriteCourses}
+          component={FavoriteCoursesStack}
           options={{
             header: () => <CustomHeader saved />,
           }}
