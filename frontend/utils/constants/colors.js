@@ -9,4 +9,5 @@ export const Colors = {
   black: "#020202",
   gold500: "#FFD700",
   gold700: "#B59410",
+  red: "#D22B2B",
 };

@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { CoursesContext } from "../../store/courses";
@@ -10,6 +11,8 @@ const Course = ({ course }) => {
   const isFavorite = favoriteCourses.includes(course._id);
 
   const { theme } = useContext(DarkModeContext);
+
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     item: {
@@ -58,8 +61,8 @@ const Course = ({ course }) => {
       marginBottom: 8,
     },
     favoriteButton: {
-      marginTop: 10,
       padding: 10,
+      paddingTop: 0,
       borderRadius: 5,
       position: "absolute",
       right: "4%",
@@ -71,37 +74,46 @@ const Course = ({ course }) => {
     },
   });
 
+  const clickHandler = () => {
+    navigation.navigate("CourseDetail", { courseId: course._id });
+  };
+
   const price = course.price === 0 ? "Free" : course.price + " usd";
 
   return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{course.name}</Text>
-      <View style={styles.description}>
-        <View style={styles.details}>
-          <View style={styles.detail}>
-            <Text style={styles.duration}>{course.duration}</Text>
-          </View>
-          <View style={styles.detail}>
-            <Text style={styles.level}>{course.level}</Text>
-          </View>
-          <View style={styles.detail}>
-            <Text style={styles.price}>{price}</Text>
+    <Pressable
+      onPress={clickHandler}
+      style={({ pressed }) => [styles.item, pressed && { opacity: 0.6 }]}
+    >
+      <View>
+        <Text style={styles.title}>{course.name}</Text>
+        <View style={styles.description}>
+          <View style={styles.details}>
+            <View style={styles.detail}>
+              <Text style={styles.duration}>{course.duration}</Text>
+            </View>
+            <View style={styles.detail}>
+              <Text style={styles.level}>{course.level}</Text>
+            </View>
+            <View style={styles.detail}>
+              <Text style={styles.price}>{price}</Text>
+            </View>
           </View>
         </View>
+        <Pressable
+          onPress={() => toggleFavorite(course._id)}
+          style={({ pressed }) => [styles.favoriteButton, pressed && { opacity: 0.6 }]}
+        >
+          <View>
+            <Ionicons
+              name={isFavorite ? "star" : "star-outline"}
+              color={theme === "light" ? Colors.gold500 : Colors.gold700}
+              size={30}
+            />
+          </View>
+        </Pressable>
       </View>
-      <Pressable
-        onPress={() => toggleFavorite(course._id)}
-        style={({ pressed }) => [styles.favoriteButton, pressed && { opacity: 0.6 }]}
-      >
-        <View>
-          <Ionicons
-            name={isFavorite ? "star" : "star-outline"}
-            color={theme === "light" ? Colors.gold500 : Colors.gold700}
-            size={30}
-          />
-        </View>
-      </Pressable>
-    </View>
+    </Pressable>
   );
 };
 
