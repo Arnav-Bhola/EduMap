@@ -12,6 +12,7 @@ import FavoriteCourses from "./screens/FavoriteCourses";
 import Settings from "./screens/Settings";
 import CoursesContextProvider from "./store/courses";
 import DarkModeContextProvider, { DarkModeContext } from "./store/dark-mode";
+import FilterVisibilityProvider from "./store/filter-visibility";
 import { Colors } from "./utils/constants/colors";
 
 const Tab = createBottomTabNavigator();
@@ -24,11 +25,11 @@ const AllCoursesStack = () => (
     }}
   >
     <Stack.Screen
-      name='AllCourses'
+      name='AllCoursesList'
       component={AllCourses}
     />
     <Stack.Screen
-      name='CourseDetail'
+      name='AllCoursesDetail'
       component={CourseDetails}
     />
   </Stack.Navigator>
@@ -41,11 +42,11 @@ const FavoriteCoursesStack = () => (
     }}
   >
     <Stack.Screen
-      name='FavoriteCourses'
+      name='FavoriteCoursesList'
       component={FavoriteCourses}
     />
     <Stack.Screen
-      name='CourseDetail'
+      name='FavoriteCourseDetails'
       component={CourseDetails}
     />
   </Stack.Navigator>
@@ -127,12 +128,14 @@ const Navigator = () => {
 
 export default function App() {
   return (
-    <CoursesContextProvider>
-      <DarkModeContextProvider>
-        <CustomStatusBar />
-        <Navigator />
-      </DarkModeContextProvider>
-    </CoursesContextProvider>
+    <FilterVisibilityProvider>
+      <CoursesContextProvider>
+        <DarkModeContextProvider>
+          <CustomStatusBar />
+          <Navigator />
+        </DarkModeContextProvider>
+      </CoursesContextProvider>
+    </FilterVisibilityProvider>
   );
 }
 

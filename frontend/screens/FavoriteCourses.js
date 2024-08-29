@@ -11,7 +11,12 @@ const FavoriteCourses = () => {
 
   const favoriteCoursesData = courses.filter((course) => favoriteCourses.includes(course._id));
 
-  const renderItem = ({ item }) => <Course course={item} />;
+  const renderItem = ({ item }) => (
+    <Course
+      course={item}
+      screenType='favorites'
+    />
+  );
 
   const styles = StyleSheet.create({
     container: {
