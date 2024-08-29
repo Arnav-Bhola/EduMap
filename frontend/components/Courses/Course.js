@@ -6,7 +6,8 @@ import { CoursesContext } from "../../store/courses";
 import { DarkModeContext } from "../../store/dark-mode";
 import { Colors } from "../../utils/constants/colors";
 
-const Course = ({ course }) => {
+const Course = ({ course, screenType }) => {
+  // Added screenType prop
   const { favoriteCourses, toggleFavorite } = useContext(CoursesContext);
   const isFavorite = favoriteCourses.includes(course._id);
 
@@ -75,7 +76,10 @@ const Course = ({ course }) => {
   });
 
   const clickHandler = () => {
-    navigation.navigate("CourseDetail", { courseId: course._id });
+    const routeName = screenType === "favorites" ? "FavoriteCourseDetails" : "AllCoursesDetail";
+    navigation.navigate(routeName, {
+      courseId: course._id,
+    });
   };
 
   const price = course.price === 0 ? "Free" : course.price + " usd";

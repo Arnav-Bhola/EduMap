@@ -2,11 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { DarkModeContext } from "../../store/dark-mode";
+import { useFilterVisibility } from "../../store/filter-visibility";
 import { Colors } from "../../utils/constants/colors";
 import SearchBar from "../UI/SearchBar";
 
 const CustomHeader = ({ saved = false }) => {
   const { theme } = useContext(DarkModeContext);
+  const { toggleFilter } = useFilterVisibility();
 
   const styles = StyleSheet.create({
     headerContainer: {
@@ -37,6 +39,7 @@ const CustomHeader = ({ saved = false }) => {
           color={theme === "light" ? Colors.black : Colors.blue500}
           size={40}
           style={styles.icon}
+          onPress={toggleFilter}
         />
       )}
     </View>
