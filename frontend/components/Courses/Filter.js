@@ -5,8 +5,10 @@ import { CoursesContext } from "../../store/courses";
 import { useFilterVisibility } from "../../store/filter-visibility";
 import { Colors } from "../../utils/constants/colors";
 import { convertDuration } from "../../utils/util";
+import { DarkModeContext } from "../../store/dark-mode";
 
 const Filter = ({ onApply }) => {
+  const {theme} = useContext(DarkModeContext)
   const { toggleFilter } = useFilterVisibility();
   const { filters, setFilters } = useContext(CoursesContext);
   const [subject, setSubject] = useState(filters.subject);
@@ -120,6 +122,47 @@ const Filter = ({ onApply }) => {
     { key: 2, label: "Paid", value: "Paid" },
   ];
 
+  const styles = StyleSheet.create({
+    container: {
+      padding: 16,
+      backgroundColor: theme === "light" ? Colors.blue500 : Colors.blue800,
+      width: '100%',
+    },
+    label: {
+      fontSize: 16,
+      marginBottom: 8,
+      color: theme === "light" ? Colors.black : Colors.white
+    },
+    input: {
+      padding: 8,
+      marginBottom: 16,
+      borderRadius: 4,
+      backgroundColor: theme === "light" ? Colors.white : Colors.white , 
+    },
+    picker: {
+      marginBottom: 16,
+      borderWidth: 1,
+      borderRadius: 4,
+      borderColor: theme === "light" ? Colors.black : Colors.white, 
+      color: theme === "light" ? Colors.black : Colors.white
+    },
+    pickerText: {
+      fontSize: 20,
+      color: theme==="light" ? Colors.black : Colors.white,
+      backgroundColor: theme==="light" ? Colors.blue400 : Colors.blue800,
+      opacity: 1,
+    },
+    buttonsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    button: {
+      fontSize: 16,
+      padding: 10,
+    },
+  });
+
+
   return (
     <ScrollView
       style={styles.container}
@@ -140,7 +183,7 @@ const Filter = ({ onApply }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Duration (Min):</Text>
-        <TextInput
+        <TextInput 
           style={styles.input}
           keyboardType='numeric'
           value={minDuration}
@@ -225,42 +268,5 @@ const Filter = ({ onApply }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: Colors.white,
-    width: "100%",
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 8,
-    marginBottom: 16,
-    borderRadius: 4,
-  },
-  picker: {
-    height: 50,
-    width: "100%",
-    marginBottom: 16,
-  },
-  pickerText: {
-    fontSize: 16,
-    color: Colors.black,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  button: {
-    fontSize: 16,
-    color: Colors.primary,
-    padding: 10,
-  },
-});
 
 export default Filter;
