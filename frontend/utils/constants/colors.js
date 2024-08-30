@@ -10,4 +10,5 @@ export const Colors = {
   gold500: "#FFD700",
   gold700: "#B59410",
   red: "#D22B2B",
+  red200: "#ff6666"
 };
