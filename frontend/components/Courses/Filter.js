@@ -275,6 +275,7 @@ const Filter = ({ onApply }) => {
       <View style={styles.row}>
         <Text style={styles.label}>Min Len:</Text>
         <TextInput
+          keyboardAppearance={theme}
           style={styles.input}
           keyboardType='number-pad'
           value={minDuration}
@@ -308,6 +309,7 @@ const Filter = ({ onApply }) => {
       <View style={styles.row}>
         <Text style={styles.label}>Max Len:</Text>
         <TextInput
+          keyboardAppearance={theme}
           style={styles.input}
           keyboardType='number-pad'
           value={maxDuration}

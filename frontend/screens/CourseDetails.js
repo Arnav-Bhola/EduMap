@@ -42,7 +42,7 @@ const CourseDetails = ({ route }) => {
       borderRadius: 8,
       alignItems: "center",
       marginBottom: 16,
-      backgroundColor: theme === "light" ? Colors.blue750 : Colors.blue700,
+      backgroundColor: Colors.blue700,
     },
     linkText: {
       color: theme === "light" ? Colors.white : Colors.blue800,
@@ -52,7 +52,7 @@ const CourseDetails = ({ route }) => {
     goBackButton: {
       padding: 16,
       borderRadius: 8,
-      backgroundColor: theme === "light" ? Colors.blue800 : Colors.blue900,
+      backgroundColor: theme === "light" ? Colors.blue750 : Colors.blue900,
       color: theme === "light" ? Colors.white : Colors.blue400,
       alignItems: "center",
     },
