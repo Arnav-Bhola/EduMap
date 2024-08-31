@@ -1,38 +1,40 @@
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import { CoursesContext } from "../../store/courses";
+import { DarkModeContext } from "../../store/dark-mode";
 import { useFilterVisibility } from "../../store/filter-visibility";
 import { Colors } from "../../utils/constants/colors";
 import { convertDuration } from "../../utils/util";
-import { DarkModeContext } from "../../store/dark-mode";
 
 const Filter = ({ onApply }) => {
   const { theme } = useContext(DarkModeContext);
   const { toggleFilter } = useFilterVisibility();
   const { filters, setFilters } = useContext(CoursesContext);
   const [subject, setSubject] = useState(filters.subject);
-  const [minDuration, setMinDuration] = useState(
-    filters.duration[0].number.toString()
-  );
-  const [maxDuration, setMaxDuration] = useState(
-    filters.duration[1].number.toString()
-  );
+  const [minDuration, setMinDuration] = useState(filters.duration[0].number.toString());
+  const [maxDuration, setMaxDuration] = useState(filters.duration[1].number.toString());
   const [price, setPrice] = useState(filters.price);
   const [level, setLevel] = useState(filters.level);
 
-  const [minDurationUnit, setMinDurationUnit] = useState(
-    filters.duration[0].unit
-  );
-  const [maxDurationUnit, setMaxDurationUnit] = useState(
-    filters.duration[1].unit
-  );
+  const [minDurationUnit, setMinDurationUnit] = useState(filters.duration[0].unit);
+  const [maxDurationUnit, setMaxDurationUnit] = useState(filters.duration[1].unit);
 
   const handleSubjectChange = (option) => {
     setSubject(option.value);
   };
 
   const handleMinDurationChange = (value) => {
+    const parsedQty = Number.parseInt(value);
+    if (Number.isNaN(parsedQty)) {
+      setMinDuration(0);
+    } else if (parsedQty > 999) {
+      setMinDuration(999);
+    } else if (parsedQty < 0) {
+      setMinDuration(0);
+    } else {
+      setMinDuration(parsedQty);
+    }
     setMinDuration(value);
   };
 
@@ -140,15 +142,17 @@ const Filter = ({ onApply }) => {
       borderWidth: 1,
       shadowColor: Colors.black,
       shadowOffset: { width: 0, height: 5 },
-      shadowOpacity: 0.3, // Adjust this to change the shadow's opacity
+      shadowOpacity: 0.3,
       shadowRadius: 5,
     },
     row: {
       backgroundColor: theme === "light" ? Colors.blue500 : Colors.blue800,
+      flex: 1,
       flexDirection: "row",
-      justifyContent: "flex-start",
+      alignItems: "center",
+      justifyContent: "center",
       gap: 10,
-      marginTop: 5,
+      marginBottom: 20,
     },
     filter: {
       flex: 1,
@@ -156,37 +160,40 @@ const Filter = ({ onApply }) => {
       alignItems: "center",
       justifyContent: "center",
       gap: 10,
+      marginBottom: 20,
     },
     label: {
       fontSize: 16,
       color: theme === "light" ? Colors.black : Colors.white,
       width: "20%",
-      marginBottom: 10,
     },
     input: {
       padding: 8,
-      marginBottom: 16,
       borderRadius: 4,
       backgroundColor: theme === "light" ? Colors.white : Colors.blue750,
-      borderWidth: 2,
+      borderWidth: 1,
       borderColor: theme === "light" ? Colors.black : Colors.white,
       color: theme === "light" ? Colors.black : Colors.white,
       width: "40%",
     },
     picker: {
-      marginBottom: 16,
       borderWidth: 1,
       borderRadius: 4,
       borderColor: theme === "light" ? Colors.black : Colors.white,
       color: theme === "light" ? Colors.black : Colors.white,
       backgroundColor: theme === "dark" ? Colors.blue750 : Colors.white,
       width: "75%",
+      height: "100%",
+      textAlign: "center",
+      flex: 1,
+      paddingVertical: 8,
     },
     rowPicker: {
       width: "56%",
     },
     pickerText: {
       color: theme === "light" ? Colors.black : Colors.white,
+      textAlign: "center",
       fontSize: 16,
     },
     overlay: {
@@ -239,19 +246,16 @@ const Filter = ({ onApply }) => {
   return (
     <ScrollView
       style={styles.container}
-      keyboardShouldPersistTaps="handled"
+      keyboardShouldPersistTaps='handled'
       bounces={false}
     >
       <View style={styles.filter}>
         <Text style={styles.label}>Subject:</Text>
         <ModalSelector
           data={subjectOptions}
-          initValue={
-            subjectOptions.find((option) => option.value === subject)?.label ||
-            "Any"
-          }
+          initValue={subjectOptions.find((option) => option.value === subject)?.label || "Any"}
           onChange={handleSubjectChange}
-          cancelText="Cancel"
+          cancelText='Cancel'
           style={styles.picker} // Style for the overall picker (select box)
           selectTextStyle={styles.pickerText} // Style for the text in the picker
           cancelTextStyle={styles.pickerText} // Style for the cancel button text
@@ -261,27 +265,31 @@ const Filter = ({ onApply }) => {
           optionStyle={styles.option} // Style for each option
           sectionTextStyle={styles.sectionText} // Style for section text (if using sections)
           cancelStyle={styles.cancelButton} // Style for the cancel button
-        />
+        >
+          <Text style={styles.pickerText}>
+            {subjectOptions.find((option) => option.value === subject)?.label || "Any"}
+          </Text>
+        </ModalSelector>
       </View>
 
-      <Text style={styles.label}>Max Len:</Text>
       <View style={styles.row}>
+        <Text style={styles.label}>Min Len:</Text>
         <TextInput
           style={styles.input}
-          keyboardType="numeric"
+          keyboardType='number-pad'
           value={minDuration}
           onChangeText={handleMinDurationChange}
-          placeholder="Min duration"
+          placeholder='Minimum Length'
+          maxLength={3}
         />
         <ModalSelector
           data={durationUnits}
           initValue={
-            durationUnits.find((option) => option.value === minDurationUnit)
-              ?.label || "Hours"
+            durationUnits.find((option) => option.value === minDurationUnit)?.label || "Hours"
           }
           onChange={handleMinDurationUnitChange}
-          cancelText="Cancel"
-          style={[styles.picker, styles.rowPicker]} // Style for the overall picker (select box)
+          cancelText='Cancel'
+          style={{ ...styles.picker, ...styles.rowPicker }} // Style for the overall picker (select box)
           selectTextStyle={styles.pickerText} // Style for the text in the picker
           cancelTextStyle={styles.pickerText} // Style for the cancel button text
           optionTextStyle={styles.pickerText} // Style for option text
@@ -290,26 +298,31 @@ const Filter = ({ onApply }) => {
           optionStyle={styles.option} // Style for each option
           sectionTextStyle={styles.sectionText} // Style for section text (if using sections)
           cancelStyle={styles.cancelButton} // Style for the cancel button
-        />
+        >
+          <Text style={styles.pickerText}>
+            {durationUnits.find((option) => option.value === minDurationUnit)?.label || "Hours"}
+          </Text>
+        </ModalSelector>
       </View>
-      <Text style={styles.label}>Min Len:</Text>
 
       <View style={styles.row}>
+        <Text style={styles.label}>Max Len:</Text>
         <TextInput
           style={styles.input}
-          keyboardType="numeric"
+          keyboardType='number-pad'
           value={maxDuration}
           onChangeText={handleMaxDurationChange}
+          placeholder='Maximum Length'
+          maxLength={3}
         />
         <ModalSelector
           data={durationUnits}
           initValue={
-            durationUnits.find((option) => option.value === maxDurationUnit)
-              ?.label || "Weeks"
+            durationUnits.find((option) => option.value === maxDurationUnit)?.label || "Weeks"
           }
           onChange={handleMaxDurationUnitChange}
-          cancelText="Cancel"
-          style={[styles.picker, styles.rowPicker]} // Style for the overall picker (select box)
+          cancelText='Cancel'
+          style={{ ...styles.picker, ...styles.rowPicker }} // Style for the overall picker (select box)
           selectTextStyle={styles.pickerText} // Style for the text in the picker
           cancelTextStyle={styles.pickerText} // Style for the cancel button text
           optionTextStyle={styles.pickerText} // Style for option text
@@ -318,18 +331,19 @@ const Filter = ({ onApply }) => {
           optionStyle={styles.option} // Style for each option
           sectionTextStyle={styles.sectionText} // Style for section text (if using sections)
           cancelStyle={styles.cancelButton} // Style for the cancel button
-        />
+        >
+          <Text style={styles.pickerText}>
+            {durationUnits.find((option) => option.value === maxDurationUnit)?.label || "Weeks"}
+          </Text>
+        </ModalSelector>
       </View>
       <View style={styles.filter}>
         <Text style={styles.label}>Price:</Text>
         <ModalSelector
           data={priceOptions}
-          initValue={
-            priceOptions.find((option) => option.value === price)?.label ||
-            "Any"
-          }
+          initValue={priceOptions.find((option) => option.value === price)?.label || "Any"}
           onChange={handlePriceChange}
-          cancelText="Cancel"
+          cancelText='Cancel'
           style={styles.picker} // Style for the overall picker (select box)
           selectTextStyle={styles.pickerText} // Style for the text in the picker
           cancelTextStyle={styles.pickerText} // Style for the cancel button text
@@ -339,18 +353,19 @@ const Filter = ({ onApply }) => {
           optionStyle={styles.option} // Style for each option
           sectionTextStyle={styles.sectionText} // Style for section text (if using sections)
           cancelStyle={styles.cancelButton} // Style for the cancel button
-        />
+        >
+          <Text style={styles.pickerText}>
+            {priceOptions.find((option) => option.value === price)?.label || "Any"}
+          </Text>
+        </ModalSelector>
       </View>
       <View style={styles.filter}>
         <Text style={styles.label}>Level:</Text>
         <ModalSelector
           data={levelOptions}
-          initValue={
-            levelOptions.find((option) => option.value === level)?.label ||
-            "Any"
-          }
+          initValue={levelOptions.find((option) => option.value === level)?.label || "Any"}
           onChange={handleLevelChange}
-          cancelText="Cancel"
+          cancelText='Cancel'
           style={styles.picker} // Style for the overall picker (select box)
           selectTextStyle={styles.pickerText} // Style for the text in the picker
           cancelTextStyle={styles.pickerText} // Style for the cancel button text
@@ -360,24 +375,31 @@ const Filter = ({ onApply }) => {
           optionStyle={styles.option} // Style for each option
           sectionTextStyle={styles.sectionText} // Style for section text (if using sections)
           cancelStyle={styles.cancelButton} // Style for the cancel button
-        />
+        >
+          <Text style={styles.pickerText}>
+            {levelOptions.find((option) => option.value === level)?.label || "Any"}
+          </Text>
+        </ModalSelector>
       </View>
 
       <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <Text
-            style={[styles.button, styles.clearButton]}
-            onPress={clearFilters}
-          >
-            Clear Filters
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Text onPress={applyFilters} style={styles.button}>
-            Apply Filters
-          </Text>
-        </View>
-      </View>r
+        <Pressable
+          style={({ pressed }) => [
+            styles.buttonContainer,
+            styles.clearButton,
+            pressed && { opacity: 0.7 },
+          ]}
+          onPress={clearFilters}
+        >
+          <Text style={[styles.button, styles.clearButton]}>Clear</Text>
+        </Pressable>
+        <Pressable
+          style={({ pressed }) => [styles.buttonContainer, pressed && { opacity: 0.7 }]}
+          onPress={applyFilters}
+        >
+          <Text style={styles.button}>Apply</Text>
+        </Pressable>
+      </View>
     </ScrollView>
   );
 };

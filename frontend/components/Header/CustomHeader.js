@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { DarkModeContext } from "../../store/dark-mode";
 import { useFilterVisibility } from "../../store/filter-visibility";
 import { Colors } from "../../utils/constants/colors";
@@ -9,6 +10,7 @@ import SearchBar from "../UI/SearchBar";
 const CustomHeader = ({ saved = false }) => {
   const { theme } = useContext(DarkModeContext);
   const { toggleFilter } = useFilterVisibility();
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     headerContainer: {
@@ -25,6 +27,11 @@ const CustomHeader = ({ saved = false }) => {
     searchBar: {
       flex: 1,
     },
+    iconContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+    },
     icon: {
       textAlign: "center",
     },
@@ -34,13 +41,20 @@ const CustomHeader = ({ saved = false }) => {
     <View style={styles.headerContainer}>
       <SearchBar style={styles.searchBar} />
       {!saved && (
-        <Ionicons
-          name='options-outline'
-          color={theme === "light" ? Colors.black : Colors.blue500}
-          size={40}
-          style={styles.icon}
-          onPress={toggleFilter}
-        />
+        <Pressable
+          onPress={() => {
+            navigation.navigate("AllCoursesList");
+            toggleFilter();
+          }}
+          style={({ pressed }) => [styles.iconContainer, { opacity: pressed ? 0.5 : 1 }]}
+        >
+          <Ionicons
+            name='options-outline'
+            color={theme === "light" ? Colors.black : Colors.blue500}
+            size={40}
+            style={styles.icon}
+          />
+        </Pressable>
       )}
     </View>
   );
