@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import Course from "../components/Courses/Course";
 import Filter from "../components/Courses/Filter";
 import { CoursesContext } from "../store/courses";
@@ -30,18 +30,36 @@ const CoursesList = () => {
       flex: 1,
       width: "100%",
     },
+    noFavoritesText: {
+      fontSize: 18,
+      textAlign: "center",
+      marginTop: 20,
+      color: theme === "light" ? Colors.black : Colors.blue400,
+      width: "80%",
+      alignSelf: "center",
+      textAlign: "center",
+    },
   });
 
   return (
     <>
       <View style={styles.background}>
-        <FlatList
-          ref={listRef}
-          data={courses}
-          renderItem={renderItem}
-          keyExtractor={(item) => item._id}
-          contentContainerStyle={styles.container}
-        />
+        {courses.length === 0 ? (
+          <>
+            <Text style={styles.noFavoritesText}>No courses found...</Text>
+            <Text style={styles.noFavoritesText}>
+              Please adjust filters or try again later. Note, courses might be loading.
+            </Text>
+          </>
+        ) : (
+          <FlatList
+            ref={listRef}
+            data={courses}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+            contentContainerStyle={styles.container}
+          />
+        )}
       </View>
       {isFilterVisible && (
         <View style={styles.filter}>

@@ -45,7 +45,6 @@ const Filter = ({ onApply }) => {
   const handlePriceChange = (option) => {
     setPrice(option.value);
   };
-  ``;
 
   const handleLevelChange = (option) => {
     setLevel(option.value);
@@ -66,8 +65,9 @@ const Filter = ({ onApply }) => {
     ) {
       return;
     }
-    setFilters({
-      name: "",
+    setFilters((prev) => {
+      return {
+        name: prev.name,
       subject,
       duration: [
         { number: parseInt(minDuration) || 0, unit: minDurationUnit },
@@ -75,7 +75,8 @@ const Filter = ({ onApply }) => {
       ],
       price,
       level,
-    });
+    };
+  });
     toggleFilter();
     onApply();
   };
@@ -89,15 +90,17 @@ const Filter = ({ onApply }) => {
     setMinDurationUnit("hours");
     setMaxDurationUnit("months");
 
-    setFilters({
-      name: "",
-      subject: "any",
-      duration: [
-        { number: 0, unit: "Hours" },
-        { number: 100, unit: "Months" },
-      ],
-      price: "any",
-      level: "any",
+    setFilters((prev) => {
+      return {
+        name: prev.name,
+        subject: "any",
+        duration: [
+          { number: 0, unit: "Hours" },
+          { number: 100, unit: "Months" },
+        ],
+        price: "any",
+        level: "any",
+      };
     });
   };
 

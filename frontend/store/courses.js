@@ -82,9 +82,10 @@ const CoursesContextProvider = ({ children }) => {
   };
 
   const filterCourses = () => {
-    return data.filter((course) => {
+    const filteredCourses = data.filter((course) => {
       const matchesName = course.name.toLowerCase().includes(filters.name.toLowerCase());
       const matchesSubject = filters.subject === "any" || course.subject === filters.subject;
+
       const courseDurationString = course.duration.split(" ")[0];
       const courseDuration = parseInt(courseDurationString);
       const courseDurationValue = convertDuration({
@@ -101,8 +102,14 @@ const CoursesContextProvider = ({ children }) => {
         (filters.price === "Free" && course.price === 0) ||
         (filters.price === "Paid" && course.price > 0);
       const matchesLevel = filters.level === "any" || course.level === filters.level;
+
       return matchesName && matchesSubject && matchesDuration && matchesPrice && matchesLevel;
     });
+
+    // Sort the filtered courses alphabetically by name
+    const sortedCourses = filteredCourses.sort((a, b) => a.name.localeCompare(b.name));
+
+    return sortedCourses;
   };
 
   const value = useMemo(

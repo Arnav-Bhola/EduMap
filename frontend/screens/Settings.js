@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext, useEffect, useState } from "react";
-import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
+import { Linking, Pressable, StyleSheet, Switch, Text, View } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import { DarkModeContext } from "../store/dark-mode";
 import { Colors } from "../utils/constants/colors";
