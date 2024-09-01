@@ -4,17 +4,20 @@ import { useContext } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { DarkModeContext } from "../../store/dark-mode";
 import { useFilterVisibility } from "../../store/filter-visibility";
+import { FontContext } from "../../store/font";
 import { Colors } from "../../utils/constants/colors";
 import SearchBar from "../UI/SearchBar";
 
 const CustomHeader = ({ saved = false }) => {
   const { theme } = useContext(DarkModeContext);
-  const { toggleFilter } = useFilterVisibility();
+  const { fontSize, fontFamily } = useContext(FontContext);
+  const { toggleFilter, isFilterVisible } = useFilterVisibility();
   const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     headerContainer: {
       flexDirection: "row",
+      alignItems: "center",
       width: "100%",
       paddingHorizontal: 10,
       justifyContent: "space-around",
@@ -49,9 +52,9 @@ const CustomHeader = ({ saved = false }) => {
           style={({ pressed }) => [styles.iconContainer, { opacity: pressed ? 0.5 : 1 }]}
         >
           <Ionicons
-            name='options-outline'
+            name={isFilterVisible ? "close-circle-outline" : "options-outline"}
             color={theme === "light" ? Colors.black : Colors.blue500}
-            size={40}
+            size={40 * fontSize}
             style={styles.icon}
           />
         </Pressable>

@@ -3,10 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { CoursesContext } from "../../store/courses";
 import { DarkModeContext } from "../../store/dark-mode";
+import { FontContext } from "../../store/font";
 import { Colors } from "../../utils/constants/colors";
 
 const SearchBar = () => {
   const { theme } = useContext(DarkModeContext);
+  const { fontSize, fontFamily } = useContext(FontContext);
+
   const { filters, setFilters } = useContext(CoursesContext);
   const [searchText, setSearchText] = useState(filters.name);
 
@@ -34,7 +37,7 @@ const SearchBar = () => {
     searchBar: {
       flex: 1,
       height: 40,
-      fontSize: 20,
+      fontSize: 20 * fontSize,
       color: theme === "light" ? Colors.blue900 : Colors.blue400,
     },
     icon: {
@@ -48,7 +51,7 @@ const SearchBar = () => {
       <View style={styles.searchBarContainer}>
         <Ionicons
           name='search'
-          size={24}
+          size={24 * fontSize}
           color='gray'
           style={styles.icon}
         />

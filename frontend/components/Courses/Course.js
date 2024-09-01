@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { CoursesContext } from "../../store/courses";
 import { DarkModeContext } from "../../store/dark-mode";
+import { FontContext } from "../../store/font";
 import { Colors } from "../../utils/constants/colors";
 
 const Course = ({ course, screenType }) => {
@@ -12,6 +13,7 @@ const Course = ({ course, screenType }) => {
   const isFavorite = favoriteCourses.includes(course._id);
 
   const { theme } = useContext(DarkModeContext);
+  const { fontSize, fontFamily } = useContext(FontContext);
 
   const navigation = useNavigation();
 
@@ -24,24 +26,24 @@ const Course = ({ course, screenType }) => {
       elevation: 1,
     },
     title: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       fontWeight: "bold",
       width: "80%",
       paddingTop: 10,
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
     duration: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       textTransform: "capitalize",
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
     level: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       textTransform: "capitalize",
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
     price: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
     description: {
@@ -112,7 +114,7 @@ const Course = ({ course, screenType }) => {
             <Ionicons
               name={isFavorite ? "star" : "star-outline"}
               color={theme === "light" ? Colors.gold500 : Colors.gold700}
-              size={30}
+              size={30 * fontSize}
             />
           </View>
         </Pressable>

@@ -13,6 +13,7 @@ import Settings from "./screens/Settings";
 import CoursesContextProvider from "./store/courses";
 import DarkModeContextProvider, { DarkModeContext } from "./store/dark-mode";
 import FilterVisibilityProvider from "./store/filter-visibility";
+import FontContextProvider, { FontContext } from "./store/font";
 import { Colors } from "./utils/constants/colors";
 
 const Tab = createBottomTabNavigator();
@@ -55,6 +56,7 @@ const FavoriteCoursesStack = () => (
 const Navigator = () => {
   const darkModeCtx = useContext(DarkModeContext);
   const theme = darkModeCtx.theme;
+  const { fontSize, fontFamily } = useContext(FontContext);
 
   return (
     <NavigationContainer>
@@ -115,7 +117,7 @@ const Navigator = () => {
               backgroundColor: theme === "light" ? Colors.blue700 : Colors.blue900,
             },
             headerTitleStyle: {
-              fontSize: 20,
+              fontSize: 20 * fontSize,
               color: theme === "light" ? Colors.black : Colors.blue500,
               marginBottom: 10,
             },
@@ -128,14 +130,16 @@ const Navigator = () => {
 
 export default function App() {
   return (
-    <FilterVisibilityProvider>
-      <CoursesContextProvider>
-        <DarkModeContextProvider>
-          <CustomStatusBar />
-          <Navigator />
-        </DarkModeContextProvider>
-      </CoursesContextProvider>
-    </FilterVisibilityProvider>
+    <FontContextProvider>
+      <FilterVisibilityProvider>
+        <CoursesContextProvider>
+          <DarkModeContextProvider>
+            <CustomStatusBar />
+            <Navigator />
+          </DarkModeContextProvider>
+        </CoursesContextProvider>
+      </FilterVisibilityProvider>
+    </FontContextProvider>
   );
 }
 

@@ -4,13 +4,16 @@ import ModalSelector from "react-native-modal-selector";
 import { CoursesContext } from "../../store/courses";
 import { DarkModeContext } from "../../store/dark-mode";
 import { useFilterVisibility } from "../../store/filter-visibility";
+import { FontContext } from "../../store/font";
 import { Colors } from "../../utils/constants/colors";
 import { convertDuration } from "../../utils/util";
 
 const Filter = ({ onApply }) => {
   const { theme } = useContext(DarkModeContext);
-  const { toggleFilter } = useFilterVisibility();
+  const { fontSize, fontFamily } = useContext(FontContext);
   const { filters, setFilters } = useContext(CoursesContext);
+
+  const { toggleFilter } = useFilterVisibility();
   const [subject, setSubject] = useState(filters.subject);
   const [minDuration, setMinDuration] = useState(filters.duration[0].number.toString());
   const [maxDuration, setMaxDuration] = useState(filters.duration[1].number.toString());
@@ -68,15 +71,15 @@ const Filter = ({ onApply }) => {
     setFilters((prev) => {
       return {
         name: prev.name,
-      subject,
-      duration: [
-        { number: parseInt(minDuration) || 0, unit: minDurationUnit },
-        { number: parseInt(maxDuration) || 100, unit: maxDurationUnit },
-      ],
-      price,
-      level,
-    };
-  });
+        subject,
+        duration: [
+          { number: parseInt(minDuration) || 0, unit: minDurationUnit },
+          { number: parseInt(maxDuration) || 100, unit: maxDurationUnit },
+        ],
+        price,
+        level,
+      };
+    });
     toggleFilter();
     onApply();
   };
@@ -102,6 +105,8 @@ const Filter = ({ onApply }) => {
         level: "any",
       };
     });
+
+    toggleFilter();
   };
 
   const subjectOptions = [
@@ -166,7 +171,7 @@ const Filter = ({ onApply }) => {
       marginBottom: 20,
     },
     label: {
-      fontSize: 16,
+      fontSize: 16 * fontSize,
       color: theme === "light" ? Colors.black : Colors.white,
       width: "20%",
     },
@@ -178,6 +183,7 @@ const Filter = ({ onApply }) => {
       borderColor: theme === "light" ? Colors.black : Colors.white,
       color: theme === "light" ? Colors.black : Colors.white,
       width: "40%",
+      fontSize: 16 * fontSize,
     },
     picker: {
       borderWidth: 1,
@@ -186,7 +192,6 @@ const Filter = ({ onApply }) => {
       color: theme === "light" ? Colors.black : Colors.white,
       backgroundColor: theme === "dark" ? Colors.blue750 : Colors.white,
       width: "75%",
-      height: "100%",
       textAlign: "center",
       flex: 1,
       paddingVertical: 8,
@@ -197,7 +202,7 @@ const Filter = ({ onApply }) => {
     pickerText: {
       color: theme === "light" ? Colors.black : Colors.white,
       textAlign: "center",
-      fontSize: 16,
+      fontSize: 16 * fontSize,
     },
     overlay: {
       backgroundColor: "rgba(0,0,0,0.7)",
@@ -233,7 +238,7 @@ const Filter = ({ onApply }) => {
       borderRadius: 5,
     },
     button: {
-      fontSize: 16,
+      fontSize: 16 * fontSize,
       padding: 10,
       backgroundColor: "#93c78e",
       color: Colors.black,

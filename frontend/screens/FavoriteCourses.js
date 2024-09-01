@@ -3,11 +3,13 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import Course from "../components/Courses/Course";
 import { CoursesContext } from "../store/courses";
 import { DarkModeContext } from "../store/dark-mode";
+import { FontContext } from "../store/font";
 import { Colors } from "../utils/constants/colors";
 
 const FavoriteCourses = () => {
   const { favoriteCourses, courses } = useContext(CoursesContext);
   const { theme } = useContext(DarkModeContext);
+  const { fontSize, fontFamily } = useContext(FontContext);
 
   const favoriteCoursesData = courses.filter((course) => favoriteCourses.includes(course._id));
 
@@ -28,7 +30,7 @@ const FavoriteCourses = () => {
       flex: 1,
     },
     noFavoritesText: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       textAlign: "center",
       marginTop: 20,
       color: theme === "light" ? Colors.black : Colors.blue400,

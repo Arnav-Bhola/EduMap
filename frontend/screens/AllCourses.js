@@ -5,12 +5,14 @@ import Filter from "../components/Courses/Filter";
 import { CoursesContext } from "../store/courses";
 import { DarkModeContext } from "../store/dark-mode";
 import { useFilterVisibility } from "../store/filter-visibility";
+import { FontContext } from "../store/font";
 import { Colors } from "../utils/constants/colors";
 
 const CoursesList = () => {
   const { courses } = useContext(CoursesContext);
   const listRef = useRef(null);
   const { theme } = useContext(DarkModeContext);
+  const { fontSize, fontFamily } = useContext(FontContext);
   const { isFilterVisible } = useFilterVisibility();
 
   const renderItem = ({ item }) => <Course course={item} />;
@@ -31,8 +33,7 @@ const CoursesList = () => {
       width: "100%",
     },
     noFavoritesText: {
-      fontSize: 18,
-      textAlign: "center",
+      fontSize: 18 * fontSize,
       marginTop: 20,
       color: theme === "light" ? Colors.black : Colors.blue400,
       width: "80%",

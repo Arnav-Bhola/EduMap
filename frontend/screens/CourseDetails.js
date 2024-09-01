@@ -3,13 +3,16 @@ import { useContext } from "react";
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { CoursesContext } from "../store/courses";
 import { DarkModeContext } from "../store/dark-mode";
+import { FontContext } from "../store/font";
 import { Colors } from "../utils/constants/colors";
 
 const CourseDetails = ({ route }) => {
   const navigation = useNavigation();
   const { theme } = useContext(DarkModeContext);
   const { courses } = useContext(CoursesContext);
+  const { fontSize, fontFamily } = useContext(FontContext);
   const { courseId } = route.params;
+  console.log(fontSize);
 
   const course = courses.find((course) => course.id === courseId);
 
@@ -20,7 +23,7 @@ const CourseDetails = ({ route }) => {
       paddingTop: 30,
     },
     title: {
-      fontSize: 24,
+      fontSize: 24 * fontSize,
       fontWeight: "bold",
       marginBottom: 16,
     },
@@ -28,12 +31,12 @@ const CourseDetails = ({ route }) => {
       marginBottom: 16,
     },
     detail: {
-      fontSize: 20,
+      fontSize: 20 * fontSize,
       marginBottom: 10,
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
     authors: {
-      fontSize: 20,
+      fontSize: 20 * fontSize,
       marginBottom: 14,
       color: theme === "light" ? Colors.black : Colors.blue400,
     },
@@ -46,7 +49,7 @@ const CourseDetails = ({ route }) => {
     },
     linkText: {
       color: theme === "light" ? Colors.white : Colors.blue800,
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       fontWeight: "bold",
     },
     goBackButton: {
@@ -58,11 +61,11 @@ const CourseDetails = ({ route }) => {
     },
     goBackText: {
       color: Colors.white,
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       fontWeight: "bold",
     },
     errorText: {
-      fontSize: 18,
+      fontSize: 18 * fontSize,
       fontWeight: "bold",
       textAlign: "center",
     },
