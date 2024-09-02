@@ -16,7 +16,6 @@ const Course = ({ course, screenType }) => {
   const { fontSize, fontFamily } = useContext(FontContext);
 
   const navigation = useNavigation();
-
   const styles = StyleSheet.create({
     item: {
       backgroundColor: theme === "light" ? Colors.white : Colors.blue750,
@@ -31,24 +30,54 @@ const Course = ({ course, screenType }) => {
       width: "80%",
       paddingTop: 10,
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     duration: {
       fontSize: 18 * fontSize,
       textTransform: "capitalize",
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     level: {
       fontSize: 18 * fontSize,
       textTransform: "capitalize",
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     price: {
       fontSize: 18 * fontSize,
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     description: {
       paddingTop: 20,
       paddingBottom: 5,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     details: {
       flexWrap: "wrap",
@@ -74,6 +103,12 @@ const Course = ({ course, screenType }) => {
     buttonText: {
       color: Colors.white,
       textAlign: "center",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
   });
 

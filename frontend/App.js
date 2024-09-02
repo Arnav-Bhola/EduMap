@@ -1,9 +1,38 @@
+import {
+  BalsamiqSans_400Regular,
+  BalsamiqSans_400Regular_Italic,
+  BalsamiqSans_700Bold,
+  BalsamiqSans_700Bold_Italic,
+} from "@expo-google-fonts/balsamiq-sans";
+import {
+  ComicNeue_300Light,
+  ComicNeue_300Light_Italic,
+  ComicNeue_400Regular,
+  ComicNeue_400Regular_Italic,
+  ComicNeue_700Bold,
+  ComicNeue_700Bold_Italic,
+} from "@expo-google-fonts/comic-neue";
+import {
+  OpenSans_300Light,
+  OpenSans_300Light_Italic,
+  OpenSans_400Regular,
+  OpenSans_400Regular_Italic,
+  OpenSans_500Medium,
+  OpenSans_500Medium_Italic,
+  OpenSans_600SemiBold,
+  OpenSans_600SemiBold_Italic,
+  OpenSans_700Bold,
+  OpenSans_700Bold_Italic,
+  OpenSans_800ExtraBold,
+  OpenSans_800ExtraBold_Italic,
+} from "@expo-google-fonts/open-sans";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useFonts } from "expo-font";
 import { useContext } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import CustomHeader from "./components/Header/CustomHeader";
 import CustomStatusBar from "./components/UI/StatusBar";
 import AllCourses from "./screens/AllCourses";
@@ -120,6 +149,12 @@ const Navigator = () => {
               fontSize: 20 * fontSize,
               color: theme === "light" ? Colors.black : Colors.blue500,
               marginBottom: 10,
+              fontFamily:
+                fontFamily === "normal"
+                  ? "OpenSans_400Regular"
+                  : fontFamily === "fun"
+                  ? "BalsamiqSans_400Regular"
+                  : "ComicNeue_400Regular",
             },
           }}
         />
@@ -129,6 +164,35 @@ const Navigator = () => {
 };
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    BalsamiqSans_400Regular,
+    BalsamiqSans_400Regular_Italic,
+    BalsamiqSans_700Bold,
+    BalsamiqSans_700Bold_Italic,
+    OpenSans_300Light,
+    OpenSans_400Regular,
+    OpenSans_500Medium,
+    OpenSans_600SemiBold,
+    OpenSans_700Bold,
+    OpenSans_800ExtraBold,
+    OpenSans_300Light_Italic,
+    OpenSans_400Regular_Italic,
+    OpenSans_500Medium_Italic,
+    OpenSans_600SemiBold_Italic,
+    OpenSans_700Bold_Italic,
+    OpenSans_800ExtraBold_Italic,
+    ComicNeue_300Light,
+    ComicNeue_300Light_Italic,
+    ComicNeue_400Regular,
+    ComicNeue_400Regular_Italic,
+    ComicNeue_700Bold,
+    ComicNeue_700Bold_Italic,
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <FontContextProvider>
       <FilterVisibilityProvider>

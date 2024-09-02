@@ -18,7 +18,9 @@ const CoursesList = () => {
   const renderItem = ({ item }) => <Course course={item} />;
 
   const handleApplyFilters = () => {
-    listRef.current.scrollToOffset({ offset: 0, animated: true });
+    if (listRef.current) {
+      listRef.current.scrollToOffset({ offset: 0, animated: true });
+    }
   };
 
   const styles = StyleSheet.create({

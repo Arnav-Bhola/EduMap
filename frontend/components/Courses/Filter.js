@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import ModalSelector from "react-native-modal-selector";
 import { CoursesContext } from "../../store/courses";
 import { DarkModeContext } from "../../store/dark-mode";
@@ -81,6 +81,7 @@ const Filter = ({ onApply }) => {
       };
     });
     toggleFilter();
+    Keyboard.dismiss();
     onApply();
   };
 
@@ -107,6 +108,7 @@ const Filter = ({ onApply }) => {
     });
 
     toggleFilter();
+    Keyboard.dismiss();
   };
 
   const subjectOptions = [
@@ -174,6 +176,12 @@ const Filter = ({ onApply }) => {
       fontSize: 16 * fontSize,
       color: theme === "light" ? Colors.black : Colors.white,
       width: "20%",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     input: {
       padding: 8,
@@ -184,6 +192,12 @@ const Filter = ({ onApply }) => {
       color: theme === "light" ? Colors.black : Colors.white,
       width: "40%",
       fontSize: 16 * fontSize,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     picker: {
       borderWidth: 1,
@@ -203,6 +217,12 @@ const Filter = ({ onApply }) => {
       color: theme === "light" ? Colors.black : Colors.white,
       textAlign: "center",
       fontSize: 16 * fontSize,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     overlay: {
       backgroundColor: "rgba(0,0,0,0.7)",
@@ -226,6 +246,7 @@ const Filter = ({ onApply }) => {
     cancelButton: {
       paddingVertical: 10,
       backgroundColor: Colors.red200,
+      color: Colors.blue400,
       borderRadius: 5,
     },
     buttonsContainer: {
@@ -244,6 +265,12 @@ const Filter = ({ onApply }) => {
       color: Colors.black,
       textAlign: "center",
       borderRadius: 5,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     clearButton: {
       backgroundColor: Colors.red200,

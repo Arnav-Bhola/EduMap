@@ -26,6 +26,12 @@ const CourseDetails = ({ route }) => {
       fontSize: 24 * fontSize,
       fontWeight: "bold",
       marginBottom: 16,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     detailsContainer: {
       marginBottom: 16,
@@ -34,11 +40,23 @@ const CourseDetails = ({ route }) => {
       fontSize: 20 * fontSize,
       marginBottom: 10,
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     authors: {
       fontSize: 20 * fontSize,
       marginBottom: 14,
       color: theme === "light" ? Colors.black : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     linkButton: {
       padding: 16,
@@ -51,6 +69,12 @@ const CourseDetails = ({ route }) => {
       color: theme === "light" ? Colors.white : Colors.blue800,
       fontSize: 18 * fontSize,
       fontWeight: "bold",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     goBackButton: {
       padding: 16,
@@ -63,11 +87,23 @@ const CourseDetails = ({ route }) => {
       color: Colors.white,
       fontSize: 18 * fontSize,
       fontWeight: "bold",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     errorText: {
       fontSize: 18 * fontSize,
       fontWeight: "bold",
       textAlign: "center",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
   });
 

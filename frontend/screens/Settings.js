@@ -11,6 +11,7 @@ const Settings = () => {
   const DarkModeCtx = useContext(DarkModeContext);
   const { theme } = DarkModeCtx;
   const { fontSize, fontFamily, setFontSize, setFontFamily } = useContext(FontContext);
+  console.log(fontFamily);
 
   const handleFontSizeChange = (value) => {
     setFontSize(value);
@@ -92,6 +93,12 @@ const Settings = () => {
       color: theme === "light" ? Colors.black : Colors.white,
       textAlign: "center",
       fontSize: 16 * fontSize,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     overlay: {
       backgroundColor: "rgba(0,0,0,0.7)",
@@ -116,6 +123,12 @@ const Settings = () => {
       fontSize: 20 * fontSize,
       marginBottom: 8,
       color: theme === "light" ? Colors.blue900 : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     linkButton: {
       padding: 16,
@@ -141,11 +154,23 @@ const Settings = () => {
       color: theme === "light" ? Colors.white : Colors.blue800,
       fontSize: 18 * fontSize,
       fontWeight: "bold",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     goBackText: {
       color: Colors.white,
       fontSize: 18 * fontSize,
       fontWeight: "bold",
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_600SemiBold"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_700Bold",
     },
     toggleSetting: {
       flexDirection: "row",

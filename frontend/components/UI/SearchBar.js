@@ -39,6 +39,12 @@ const SearchBar = () => {
       height: 40,
       fontSize: 20 * fontSize,
       color: theme === "light" ? Colors.blue900 : Colors.blue400,
+      fontFamily:
+        fontFamily === "normal"
+          ? "OpenSans_400Regular"
+          : fontFamily === "fun"
+          ? "BalsamiqSans_400Regular"
+          : "ComicNeue_400Regular",
     },
     icon: {
       paddingRight: 10,
